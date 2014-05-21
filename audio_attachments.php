@@ -10,9 +10,9 @@
 class audio_attachments extends rcube_plugin
 {
 	public $task = 'mail';
-	
+
 	private $message;
-	
+
 	function init(){
 		$rcmail = rcmail::get_instance();
 		if ($rcmail->action == 'show' || $rcmail->action == 'preview') {
@@ -20,14 +20,14 @@ class audio_attachments extends rcube_plugin
 			$this->add_hook('template_object_messagebody', array($this, 'html_output'));
 		}
 	}
-	
+
 	/**
 	* Stores a reference to the message object
 	*/
 	function message_load($p){
 		$this->message = $p['object'];
 	}
-	
+
 	/**
 	* This callback function adds a <audio> tag for each audio attachment
 	* @see http://www.w3schools.com/html/html_sounds.asp
@@ -36,7 +36,7 @@ class audio_attachments extends rcube_plugin
 		foreach ((array)$this->message->attachments as $attachment){
 			if(!preg_match('/^audio\//', $attachment->mimetype))
 				continue;
-			
+
 			$html  = "\n".'<hr><div style="text-align:center">';
 			$html .= '<h4>'.$attachment->filename.'</h4>';
 			$html .= '<audio controls="controls"><source src="';
@@ -49,12 +49,10 @@ class audio_attachments extends rcube_plugin
 			$html .= $this->message->get_part_url($attachment->mime_id);
 			$html .= '" />';
 			$html .= '</audio></div>';
-			
-			$p['content'] .= $html;			
+
+			$p['content'] .= $html;
 		}
 		return $p;
 	}
 
 }
-
-//EOF
