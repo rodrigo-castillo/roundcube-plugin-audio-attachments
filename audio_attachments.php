@@ -34,7 +34,13 @@ class audio_attachments extends rcube_plugin
 	*/
 	function html_output($p){
 		foreach ((array)$this->message->attachments as $attachment){
-			if(!preg_match('/^audio\//', $attachment->mimetype))
+			$mimetype = $attachment->mimetype;
+			if(preg_match('/^application\/octet-stream/', $mimetype)){
+				/* If we have no useful MIME type, then try to detect it. */
+				$contents = $this->message->get_part_content($attachment->mime_id, null, true);
+				$mimetype = rcube_mime::file_content_type($contents, $attachment->filename, $mimetype, true, true);
+			}
+			if(!preg_match('/^audio\//', $mimetype))
 				continue;
 
 			$url = $this->message->get_part_url($attachment->mime_id);
@@ -44,7 +50,7 @@ class audio_attachments extends rcube_plugin
 			$html .= '<audio controls="controls"><source src="';
 			$html .= $url;
 			$html .= '" type="';
-			$html .= $attachment->mimetype;
+			$html .= $mimetype;
 			$html .= '" />';
 			$html .= '<embed height="50px" width="100px" src="';
 			$html .= $url;
