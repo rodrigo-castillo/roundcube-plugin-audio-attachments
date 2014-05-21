@@ -37,15 +37,17 @@ class audio_attachments extends rcube_plugin
 			if(!preg_match('/^audio\//', $attachment->mimetype))
 				continue;
 
+			$url = $this->message->get_part_url($attachment->mime_id);
+
 			$html  = "\n".'<hr><div style="text-align:center">';
 			$html .= '<h4>'.$attachment->filename.'</h4>';
 			$html .= '<audio controls="controls"><source src="';
-			$html .= $this->message->get_part_url($attachment->mime_id);
+			$html .= $url;
 			$html .= '" type="';
 			$html .= $attachment->mimetype;
 			$html .= '" />';
 			$html .= '<embed height="50px" width="100px" src="';
-			$html .= $this->message->get_part_url($attachment->mime_id);
+			$html .= $url;
 			$html .= '" />';
 			$html .= '</audio></div>';
 
