@@ -43,7 +43,6 @@ class audio_attachments extends rcube_plugin
 			$html .= $this->message->get_part_url($attachment->mime_id);
 			$html .= '" type="';
 			$html .= $attachment->mimetype;
-			$html .= $this->message->get_part_url($attechment->mime_id);
 			$html .= '" />';
 			$html .= '<embed height="50px" width="100px" src="';
 			$html .= $this->message->get_part_url($attachment->mime_id);
