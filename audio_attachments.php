@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Plays audio attachments inside the message window unsing the <audio>-tag.
+* Plays audio attachments inside the message window using the <audio>-tag.
 *
 * @license GNU GPLv3+
 * @author Ole Schütt
